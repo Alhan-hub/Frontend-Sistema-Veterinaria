@@ -20,4 +20,8 @@ export class FacturaService {
     return this.http.get<FacturaRead>(`${this.base}/${id}`);
   }
 
+  create(body: FacturaCreate): Observable<FacturaRead> {
+    return this.http.post<FacturaRead>(`${this.base}`, body);
+  }
+
 }
