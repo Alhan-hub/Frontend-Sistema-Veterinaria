@@ -26,6 +26,10 @@ export class FacturaService {
 
   update(id: string, body: FacturaUpdate): Observable<FacturaRead> {
     return this.http.put<FacturaRead>(`${this.base}/${id}`, body);
-  } 
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete(`${this.base}/${id}`, { observe: 'response' }).pipe(map(() => undefined));
+  }
 
 }
