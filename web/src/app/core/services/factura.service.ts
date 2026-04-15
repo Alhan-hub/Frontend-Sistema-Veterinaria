@@ -24,4 +24,8 @@ export class FacturaService {
     return this.http.post<FacturaRead>(`${this.base}`, body);
   }
 
+  update(id: string, body: FacturaUpdate): Observable<FacturaRead> {
+    return this.http.put<FacturaRead>(`${this.base}/${id}`, body);
+  } 
+
 }
