@@ -47,9 +47,73 @@ export class FacturaDialogComponent implements OnInit {
   readonly form = this.fb.nonNullable.group({
     id_cita: ['', Validators.required],
     id_propietario: ['', Validators.required],
-    id_usario_genera: ['', Validators.required],
+    id_usuario_genera: ['', Validators.required],
     total: [0, Validators.required],
     metodo_pago: ['', Validators.required],
     fecha_pago: ['', Validators.required], 
   });
+
+  ngOnInit(): void {
+    this.citaSvc.list().subscribe({
+      next: (rows) => this.citas.set(rows),
+      error: (err: HttpErrorResponse) => this.snack.open(this.msg(err), 'Cerrar', { duration: 6000 }),
+    });
+    this.propietarioSvc.list().subscribe({
+      next: (rows) => this.propietarios.set(rows),
+      error: (err: HttpErrorResponse) => this.snack.open(this.msg(err), 'Cerrar', { duration: 6000 }),
+    });
+    if (this.data.mode === 'edit' && this.data.row) {
+      const r = this.data.row;
+      this.form.patchValue({
+        id_cita: r.id_cita,
+        id_propietario: r.id_propietario,
+        total: r.total,
+        metodo_pago: r.metodo_pago,
+        fecha_pago: r.fecha_pago,
+      });
+    }
+  }
+
+  cancel(): void {
+    this.dialogRef.close(false);
+  }
+
+  save(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    const v = this.form.getRawValue();
+    if (this.data.mode === 'create') {
+      this.svc
+        .create({
+          id_cita: v.id_cita,
+          id_propietario: v.id_propietario,
+          total: v.total,
+          metodo_pago: v.metodo_pago,
+          id_usuario_genera: v.id_usuario_genera
+        })
+        .subscribe({
+          next: () => this.dialogRef.close(true),
+          error: (err: HttpErrorResponse) => this.snack.open(this.msg(err), 'Cerrar', { duration: 6000 }),
+        });
+      return;
+    }
+    this.svc
+      .update(this.data.row!.id_factura, {
+        total: v.total || null,
+        metodo_pago: v.metodo_pago || null,
+      })
+      .subscribe({
+        next: () => this.dialogRef.close(true),
+        error: (err: HttpErrorResponse) => this.snack.open(this.msg(err), 'Cerrar', { duration: 6000 }),
+      });
+  }
+
+  private msg(err: HttpErrorResponse): string {
+    const d = err.error?.detail;
+    if (typeof d === 'string') return d;
+    if (Array.isArray(d)) return d.map((x) => x.msg ?? JSON.stringify(x)).join('; ');
+    return err.message;
+  }
 }
