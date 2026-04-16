@@ -1,0 +1,63 @@
+Aquí tienes la adaptación del archivo HTML para que coincida exactamente con la lógica y los campos de tu FacturaDialogComponent. He actualizado los títulos, las etiquetas, los selectores para Citas y Propietarios, y los campos numéricos y de fecha.
+
+Archivo: factura-dialog.html
+HTML
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nueva Factura' : 'Editar Factura' }}</h2>
+
+<mat-dialog-content class="dialog-body">
+  <form [formGroup]="form" class="grid">
+    
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Cita</mat-label>
+      <mat-select formControlName="id_cita">
+        @for (c of citas(); track c.id_cita) {
+          <mat-option [value]="c.id_cita">
+            Cita: {{ c.id_cita.slice(0, 8) }}... ({{ c.fecha_cita }})
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Propietario</mat-label>
+      <mat-select formControlName="id_propietario">
+        @for (p of propietarios(); track p.id_propietario) {
+          <mat-option [value]="p.id_propietario">{{ p.nombre }} {{ p.apellido }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Total</mat-label>
+      <input matInput type="number" formControlName="total" placeholder="0.00" />
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Método de Pago</mat-label>
+      <mat-select formControlName="metodo_pago">
+        <mat-option value="Efectivo">Efectivo</mat-option>
+        <mat-option value="Tarjeta">Tarjeta</mat-option>
+        <mat-option value="Transferencia">Transferencia</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Fecha de Pago</mat-label>
+      <input matInput type="date" formControlName="fecha_pago" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>ID Usuario Genera</mat-label>
+      <input matInput formControlName="id_usuario_genera" placeholder="ID del usuario" />
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()" [disabled]="form.invalid">
+    Guardar
+  </button>
+</mat-dialog-actions>
