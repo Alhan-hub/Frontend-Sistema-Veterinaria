@@ -18,3 +18,38 @@ export interface FacturaDialogData {
   row?: FacturaRead;
 }
 
+@Component({
+  selector: 'app-factura-dialog',
+  imports: [
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSnackBarModule,
+  ],
+  templateUrl: './factura-dialog.html',
+})
+export class FacturaDialogComponent implements OnInit {
+  private readonly fb = inject(FormBuilder);
+  private readonly svc = inject(FacturaService);
+  private readonly citaSvc = inject(CitaService);
+  private readonly propietarioSvc = inject(PropietarioService);
+  private readonly dialogRef = inject(MatDialogRef<FacturaDialogComponent, boolean>);
+  private readonly snack = inject(MatSnackBar);
+
+  readonly data = inject<FacturaDialogData>(MAT_DIALOG_DATA);
+
+  readonly citas = signal<CitaRead[]>([]);
+  readonly propietarios = signal<PropietarioRead[]>([]);
+
+  readonly form = this.fb.nonNullable.group({
+    id_cita: ['', Validators.required],
+    id_propietario: ['', Validators.required],
+    id_usario_genera: ['', Validators.required],
+    total: [0, Validators.required],
+    metodo_pago: ['', Validators.required],
+    fecha_pago: ['', Validators.required], 
+  });
+}
