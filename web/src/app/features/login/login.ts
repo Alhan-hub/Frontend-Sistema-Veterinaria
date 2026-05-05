@@ -99,8 +99,7 @@ export class LoginComponent implements OnInit {
                 nombre: v.nombre,
                 nombre_usuario: v.nombre_usuario,
                 email: v.email,
-                clave: v.clave,
-                telefono: v.telefono || null,
+                clave: v.clave
             })
             .subscribe({
                 next: (created) => {
