@@ -19,7 +19,7 @@ export class VacunaService {
     return this.http.get<VacunaRead[]>(`${this.base}`, { params });
   }
 
-  get(id: Number): Observable<VacunaRead> {
+  get(id: String): Observable<VacunaRead> {
     return this.http.get<VacunaRead>(`${this.base}/${id}`);
   }
 
@@ -27,11 +27,11 @@ export class VacunaService {
     return this.http.post<VacunaRead>(`${this.base}`, body);
   }
 
-  update(id: Number, body: VacunaUpdate): Observable<VacunaRead> {
+  update(id: String, body: VacunaUpdate): Observable<VacunaRead> {
     return this.http.put<VacunaRead>(`${this.base}/${id}`, body);
   }
 
-  delete(id: Number): Observable<void> {
+  delete(id: String): Observable<void> {
     return this.http.delete(`${this.base}/${id}`, { observe: 'response' })
       .pipe(
         map(() => undefined)
