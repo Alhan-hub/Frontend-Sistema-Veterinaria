@@ -30,12 +30,12 @@ export class ShellComponent {
 
   // Arreglo completo con todas las entidades para la navegación
   readonly entities = [
-    { label: 'Usuarios', path: '/usuarios', icon: 'manage_accounts' },
-    { label: 'Propietarios', path: '/propietarios', icon: 'person' },
-    { label: 'Mascotas', path: '/mascotas', icon: 'pets' },
-    { label: 'Citas', path: '/citas', icon: 'calendar_today' },
-    { label: 'Facturas', path: '/facturas', icon: 'receipt_long' },
-    { label: 'Vacunas', path: '/vacunas', icon: 'vaccines' }
+    { label: 'Usuarios', path: 'usuarios', icon: 'manage_accounts' },
+    { label: 'Propietarios', path: 'propietarios', icon: 'person' },
+    { label: 'Mascotas', path: 'mascotas', icon: 'pets' },
+    { label: 'Citas', path: 'citas', icon: 'calendar_today' },
+    { label: 'Facturas', path: 'facturas', icon: 'receipt_long' },
+    { label: 'Vacunas', path: 'vacunas', icon: 'vaccines' }
   ];
 
   // Usuarios simulados para el selector de auditoría
