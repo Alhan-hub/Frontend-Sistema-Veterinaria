@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nueva Vacuna' : 'Editar Vacuna' }}</h2>
+
+<mat-dialog-content class="dialog-body">
+  <form [formGroup]="form" class="grid">
+    
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Nombre de la Vacuna</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ej. Parvovirus" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Costo</mat-label>
+      <input matInput type="number" formControlName="costo" placeholder="0" />
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>Mascota</mat-label>
+      <mat-select formControlName="id_mascota">
+        @for (m of mascotas(); track m.id_mascota) {
+          <mat-option [value]="m.id_mascota">
+            {{ m.nombre }} (ID: {{ m.id_mascota.slice(0, 5) }})
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="span-2">
+      <mat-label>ID Usuario que Registra</mat-label>
+      <input matInput formControlName="id_usuario_registra" placeholder="ID del usuario" />
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()" [disabled]="form.invalid">
+    Guardar
+  </button>
+</mat-dialog-actions>
