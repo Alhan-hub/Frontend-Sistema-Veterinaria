@@ -1,77 +1,247 @@
-$sidebar-width: 240px;
-$sidebar-collapsed-width: 70px;
-$transition-speed: 0.3s;
-
-.shell-container {
+.shell {
   height: 100vh;
+  --nav-expanded: 268px;
+  --nav-collapsed: 76px;
+  --nav-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --nav-duration: 320ms;
 }
 
-.sidebar {
-  width: $sidebar-width;
-  transition: width $transition-speed cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  background-color: #fff;
-  overflow-x: hidden;
+.shell.mat-drawer-transition .mat-drawer-content {
+  transition-duration: var(--nav-duration);
+  transition-timing-function: var(--nav-ease);
+}
 
-  &.collapsed {
-    width: $sidebar-collapsed-width;
+.nav-rail {
+  width: var(--nav-expanded);
+  max-width: var(--nav-expanded);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition:
+    width var(--nav-duration) var(--nav-ease),
+    max-width var(--nav-duration) var(--nav-ease);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(180deg, #e8f5e9 0%, #f1f8e9 40%, #ffffff 100%);
+  box-shadow: 3px 0 16px rgba(46, 125, 50, 0.10);
+  overflow: hidden;
+}
+
+.nav-rail.collapsed {
+  width: var(--nav-collapsed);
+  max-width: var(--nav-collapsed);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid rgba(46, 125, 50, 0.15);
+  min-height: 64px;
+  box-sizing: border-box;
+}
+
+.nav-brand__mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+  box-shadow: 0 4px 14px rgba(46, 125, 50, 0.35);
+}
+
+.nav-rail.collapsed .nav-brand__mark {
+  margin: 0 auto;
+}
+
+.nav-brand__icon {
+  color: white;
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.nav-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s ease, transform 0.25s var(--nav-ease);
+}
+
+.nav-rail.collapsed .nav-brand__text {
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.nav-brand__title {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: #1b5e20;
+}
+
+.nav-brand__sub {
+  font-size: 0.72rem;
+  color: #388e3c;
+}
+
+.nav-list {
+  flex: 1;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.nav-item {
+  margin: 3px 10px;
+  border-radius: 12px !important;
+  transition: background-color 0.2s ease, transform 0.18s ease;
+
+  &:hover {
+    background-color: rgba(46, 125, 50, 0.10) !important;
+    transform: translateX(2px);
   }
 }
 
-.sidebar-header {
-  height: 64px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  background-color: #3f51b5;
-  color: white;
-  
-  .logo-icon { margin-right: 12px; }
-  .app-title { font-weight: bold; font-size: 1.2rem; white-space: nowrap; }
+.nav-rail.collapsed .nav-item {
+  margin: 6px 8px;
+  justify-content: center;
+  padding-inline: 0 !important;
+}
+
+.nav-item__icon {
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover .nav-item__icon,
+.active-link .nav-item__icon {
+  color: #2e7d32;
 }
 
 .active-link {
-  background-color: rgba(63, 81, 181, 0.1);
-  color: #3f51b5 !important;
-  border-right: 4px solid #3f51b5;
+  background: linear-gradient(
+    90deg,
+    rgba(46, 125, 50, 0.18) 0%,
+    rgba(46, 125, 50, 0.06) 100%
+  ) !important;
+  box-shadow: inset 3px 0 0 #2e7d32;
+  font-weight: 600;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  z-index: 10;
+.active-link .nav-label {
+  color: #2e7d32;
 }
 
-.spacer { flex: 1 1 auto; }
+.nav-label {
+  white-space: nowrap;
+  transition: opacity 0.2s ease, max-width 0.3s var(--nav-ease);
+}
 
-.audit-selector {
-  margin-right: 16px;
-  .user-select {
-    width: 200px;
-    font-size: 0.8rem;
-    margin-top: 15px;
-    
-    ::v-deep .mat-mdc-text-field-wrapper {
-      background-color: rgba(255, 255, 255, 0.15);
-      color: white;
-    }
-    ::v-deep .mat-mdc-select-value, ::v-deep .mat-mdc-floating-label {
-      color: white !important;
-    }
+.nav-rail.collapsed .nav-label {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  display: none;
+}
+
+.nav-rail.collapsed .nav-item ::ng-deep .mdc-list-item__content {
+  justify-content: center;
+}
+
+.nav-footer {
+  padding: 12px 10px 16px;
+  border-top: 1px solid rgba(46, 125, 50, 0.15);
+}
+
+.collapse-btn {
+  width: 100%;
+  border-radius: 12px !important;
+  justify-content: flex-start;
+  gap: 8px;
+  border-color: rgba(46, 125, 50, 0.35) !important;
+  color: #2e7d32 !important;
+
+  &:hover {
+    background-color: rgba(46, 125, 50, 0.08) !important;
   }
 }
 
-.page-body {
-  padding: 24px;
-  background-color: #f5f5f5;
-  min-height: calc(100vh - 64px);
+.nav-rail.collapsed .collapse-btn {
+  justify-content: center;
+  min-width: 0;
+  padding: 0 8px;
+
+  span { display: none; }
 }
 
-.page-body > * {
-  animation: fadeIn 0.5s ease-in-out;
+.main-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-@keyframes fadeIn {
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: linear-gradient(105deg, #1b5e20 0%, #2e7d32 40%, #388e3c 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 20px rgba(27, 94, 32, 0.35);
+  padding-inline: 8px 16px;
+}
+
+.menu-toggle {
+  margin-right: 4px;
+  color: white !important;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  color: white;
+}
+
+.spacer { flex: 1; }
+
+.audit-select {
+  color: white;
+  font-size: 0.9rem;
+  width: 150px;
+  margin-right: 12px;
+
+  ::ng-deep .mat-mdc-select-value,
+  ::ng-deep .mat-mdc-select-arrow svg {
+    color: white !important;
+    fill: white !important;
+  }
+}
+
+.main-column ::ng-deep .mat-mdc-select-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.content {
+  flex: 1;
+  padding: 20px 24px 40px;
+  box-sizing: border-box;
+}
+
+.content-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: content-enter 0.35s var(--nav-ease) both;
+}
+
+@keyframes content-enter {
   from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
