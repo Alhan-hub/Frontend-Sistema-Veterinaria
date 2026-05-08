@@ -1,3 +1,4 @@
+import { CurrencyPipe, SlicePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +24,8 @@ import { VacunaDialogComponent, VacunaDialogData } from './vacuna-dialog';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    CurrencyPipe,
+    SlicePipe,
   ],
   templateUrl: './vacuna-list.html',
   styleUrl: './vacuna-list.scss',
