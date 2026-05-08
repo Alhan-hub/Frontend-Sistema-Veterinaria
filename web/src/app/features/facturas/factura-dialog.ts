@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -28,6 +29,7 @@ export interface FacturaDialogData {
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
+    DatePipe,
   ],
   templateUrl: './factura-dialog.html',
 })
@@ -50,7 +52,7 @@ export class FacturaDialogComponent implements OnInit {
     id_usuario_genera: ['', Validators.required],
     total: [0, Validators.required],
     metodo_pago: ['', Validators.required],
-    fecha_pago: ['', Validators.required], 
+    fecha_pago: ['', Validators.required],
   });
 
   ngOnInit(): void {
