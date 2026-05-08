@@ -12,8 +12,7 @@ export class UsuarioService {
   constructor(private readonly http: HttpClient) { }
 
   list(): Observable<UsuarioRead[]> {
-    const params = new HttpParams().set('skip', 0).set('limit', 500);
-    return this.http.get<UsuarioRead[]>(`${this.base}/`, { params });
+    return this.http.get<UsuarioRead[]>(`${this.base}`);
   }
 
   get(id: string): Observable<UsuarioRead> {
@@ -21,7 +20,7 @@ export class UsuarioService {
   }
 
   create(body: UsuarioCreate): Observable<UsuarioRead> {
-    return this.http.post<UsuarioRead>(`${this.base}/`, body);
+    return this.http.post<UsuarioRead>(`${this.base}`, body);
   }
 
   update(id: string, body: UsuarioUpdate): Observable<UsuarioRead> {

@@ -8,7 +8,7 @@
       <mat-select formControlName="id_cita">
         @for (c of citas(); track c.id_cita) {
           <mat-option [value]="c.id_cita">
-            Cita: {{ c.id_cita.slice(0, 8) }}... ({{ c.fecha_cita }})
+            Cita: {{ c.id_cita.slice(0, 8) }}... ({{ c.fecha_hora | date:'short' }})
           </mat-option>
         }
       </mat-select>
@@ -18,7 +18,7 @@
       <mat-label>Propietario</mat-label>
       <mat-select formControlName="id_propietario">
         @for (p of propietarios(); track p.id_propietario) {
-          <mat-option [value]="p.id_propietario">{{ p.nombre }} {{ p.apellido }}</mat-option>
+          <mat-option [value]="p.id_propietario">{{ p.nombre }}</mat-option>
         }
       </mat-select>
     </mat-form-field>

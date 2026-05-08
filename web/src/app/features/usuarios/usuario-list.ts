@@ -99,4 +99,4 @@ export class UsuarioListComponent implements AfterViewInit {
     if (Array.isArray(d)) return d.map((x) => x.msg ?? JSON.stringify(x)).join('; ');
     return err.message;
   }
-}s
+}
