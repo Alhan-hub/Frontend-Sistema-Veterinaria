@@ -27,9 +27,9 @@ Cliente web en **Angular** con **Angular Material** que consume la API REST del 
 
 ## Video demostrativo
 
-El siguiente video muestra la ejecución del frontend en entorno local, la interacción con el backend y la operación completa de todos los CRUD con persistencia en la base de datos:
+El siguiente video muestra la ejecución de cada uno de los tests realizados en las seis entidades del sistema de gestión de veterinaria:
 
-[Ver video en YouTube](https://youtu.be/HDqiVpvZVRE)
+[Ver video en YouTube](https://youtu.be/PUUtM93gruY)
 
 ---
 
